@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sabores del Mundo: gastronomía, música y tradiciones de República Dominicana, Ecuador, Puerto Rico y México.">
+  <title>Sabores del Mundo</title>
+
+  <!-- Tipografía desde Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== Variables de color ===== */
+    :root {
+      --crema: #fff8ef;
+      --tinta: #2b1d14;
+      --tinta-suave: #6b5446;
+      --naranja: #e8632b;
+      --amarillo: #f4b63f;
+      --verde: #2f7d5b;
+      --borde: #f0dfcc;
+      --rd: #c8102e;      /* República Dominicana */
+      --ec: #f5c400;      /* Ecuador */
+      --pr: #1d5fbf;      /* Puerto Rico */
+      --mx: #006847;      /* México */
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--crema);
+      color: var(--tinta);
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.15; }
+    a { color: inherit; }
+    .contenedor { width: min(1100px, 100% - 32px); margin-inline: auto; }
+
+    /* ===== Menú de navegación ===== */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(255, 248, 239, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--borde);
+    }
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; gap: 16px; flex-wrap: wrap;
+    }
+    .logo { font-family: 'Playfair Display', serif; font-weight: 800; font-size: 1.4rem; text-decoration: none; }
+    .logo span { color: var(--naranja); }
+    nav ul { list-style: none; display: flex; gap: 20px; flex-wrap: wrap; }
+    nav ul a { text-decoration: none; font-size: 0.92rem; font-weight: 600; color: var(--tinta-suave); }
+    nav ul a:hover { color: var(--naranja); }
+
+    /* ===== Banner principal (hero) ===== */
+    .hero {
+      background:
+        radial-gradient(circle at 15% 20%, rgba(244,182,63,.55), transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(232,99,43,.45), transparent 45%),
+        radial-gradient(circle at 50% 100%, rgba(47,125,91,.35), transparent 50%),
+        var(--crema);
+      padding: 90px 0 80px;
+      text-align: center;
+    }
+    .etiqueta {
+      display: inline-block; background: var(--tinta); color: var(--crema);
+      padding: 6px 16px; border-radius: 999px; font-size: 0.8rem;
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;
+    }
+    .hero h1 { font-size: clamp(2.6rem, 7vw, 5rem); margin-bottom: 18px; }
+    .hero h1 em { color: var(--naranja); font-style: italic; }
+    .hero p { max-width: 620px; margin: 0 auto 32px; font-size: 1.1rem; color: var(--tinta-suave); }
+    .platos-hero { font-size: clamp(2.2rem, 6vw, 3.4rem); margin-bottom: 32px; letter-spacing: 10px; }
+
+    .boton {
+      display: inline-block; background: var(--naranja); color: #fff;
+      padding: 14px 32px; border-radius: 999px; text-decoration: none;
+      font-weight: 600; transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 8px 20px rgba(232,99,43,.35);
+    }
+    .boton:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(232,99,43,.45); }
+    .boton.secundario { background: transparent; color: var(--tinta); border: 2px solid var(--tinta); box-shadow: none; margin-left: 10px; }
+
+    /* ===== Secciones generales ===== */
+    section { padding: 80px 0; }
+    .titulo-seccion { text-align: center; margin-bottom: 48px; }
+    .titulo-seccion h2 { font-size: clamp(2rem, 4.5vw, 2.8rem); margin-bottom: 10px; }
+    .titulo-seccion p { color: var(--tinta-suave); max-width: 560px; margin: 0 auto; }
+
+    /* ===== Tarjetas de países ===== */
+    .paises {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+    .tarjeta {
+      background: #fff; border-radius: 20px; overflow: hidden;
+      border: 1px solid var(--borde);
+      transition: transform .25s, box-shadow .25s;
+      text-decoration: none; display: block;
+    }
+    .tarjeta:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(43,29,20,.12); }
+    .tarjeta .portada {
+      height: 140px; display: grid; place-items: center; font-size: 4rem;
+    }
+    .tarjeta .cuerpo { padding: 20px; }
+    .tarjeta h3 { font-size: 1.4rem; margin-bottom: 6px; }
+    .tarjeta p { font-size: 0.92rem; color: var(--tinta-suave); }
+
+    .rd .portada { background: linear-gradient(135deg, var(--rd), #002d62); }
+    .ec .portada { background: linear-gradient(135deg, var(--ec), #034ea2 60%, #ed1c24); }
+    .pr .portada { background: linear-gradient(135deg, var(--pr), #ed0000); }
+    .mx .portada { background: linear-gradient(135deg, var(--mx), #ffffff 50%, #ce1126); }
+
+    /* ===== Detalle de cada país ===== */
+    .pais-detalle {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+      padding: 50px 0; border-bottom: 1px dashed var(--borde);
+    }
+    .pais-detalle:last-child { border-bottom: none; }
+    .pais-detalle:nth-child(even) .visual { order: 2; }
+
+    .visual {
+      border-radius: 24px; min-height: 300px; display: grid; place-items: center;
+      font-size: 7rem; position: relative; overflow: hidden;
+    }
+    .visual .bandera {
+      position: absolute; top: 16px; left: 16px; font-size: 2rem;
+      background: rgba(255,255,255,.9); border-radius: 12px; padding: 4px 10px;
+    }
+    .pais-detalle h3 { font-size: 2.2rem; margin-bottom: 12px; }
+    .pais-detalle > div > p { color: var(--tinta-suave); margin-bottom: 18px; }
+
+    .bloque { margin-bottom: 14px; }
+    .bloque h4 {
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px;
+      color: var(--naranja); margin-bottom: 6px;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      background: #fff; border: 1px solid var(--borde); border-radius: 999px;
+      padding: 5px 14px; font-size: 0.86rem;
+    }
+
+    /* ===== Sección de experiencias ===== */
+    .experiencias { background: var(--tinta); color: var(--crema); }
+    .experiencias .titulo-seccion p { color: #d8c6b6; }
+    .grid-exp { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+    .exp {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px; padding: 28px; text-align: center;
+    }
+    .exp .icono { font-size: 2.4rem; margin-bottom: 12px; }
+    .exp h3 { font-size: 1.3rem; margin-bottom: 8px; }
+    .exp p { color: #d8c6b6; font-size: 0.92rem; }
+
+    /* ===== Suscripción ===== */
+    .suscribete {
+      background: linear-gradient(135deg, var(--naranja), var(--amarillo));
+      border-radius: 28px; padding: 56px 32px; text-align: center; color: #fff;
+    }
+    .suscribete h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 10px; }
+    .suscribete p { margin-bottom: 26px; opacity: .95; }
+    .suscribete form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .suscribete input {
+      padding: 14px 20px; border-radius: 999px; border: none;
+      width: min(340px, 100%); font-family: inherit; font-size: 1rem;
+    }
+    .suscribete button {
+      padding: 14px 28px; border-radius: 999px; border: none; cursor: pointer;
+      background: var(--tinta); color: #fff; font-family: inherit; font-weight: 600; font-size: 1rem;
+    }
+    #mensaje { margin-top: 16px; font-weight: 600; min-height: 1.4em; }
+
+    /* ===== Pie de página ===== */
+    footer { padding: 36px 0; text-align: center; font-size: 0.88rem; color: var(--tinta-suave); border-top: 1px solid var(--borde); }
+
+    /* ===== Diseño para celulares ===== */
+    @media (max-width: 760px) {
+      nav ul { gap: 14px; }
+      .pais-detalle { grid-template-columns: 1fr; gap: 24px; }
+      .pais-detalle:nth-child(even) .visual { order: 0; }
+      .visual { min-height: 220px; font-size: 5rem; }
+      .boton.secundario { margin: 12px 0 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== MENÚ ===== -->
+  <header>
+    <nav class="contenedor">
+      <a href="#inicio" class="logo">Sabores <span>del Mundo</span></a>
+      <ul>
+        <li><a href="#paises">Países</a></li>
+        <li><a href="#republica-dominicana">Rep. Dominicana</a></li>
+        <li><a href="#ecuador">Ecuador</a></li>
+        <li><a href="#puerto-rico">Puerto Rico</a></li>
+        <li><a href="#mexico">México</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== BANNER PRINCIPAL ===== -->
+  <section class="hero" id="inicio">
+    <div class="contenedor">
+      <span class="etiqueta">Gastronomía · Música · Viajes</span>
+      <h1>Viaja con el <em>paladar</em></h1>
+      <div class="platos-hero">🍛 🥘 🍲 🌮</div>
+      <p>Descubre la comida, la música y las tradiciones de cuatro tierras llenas de sabor: República Dominicana, Ecuador, Puerto Rico y México.</p>
+      <a href="#paises" class="boton">Explorar países</a>
+      <a href="#suscribete" class="boton secundario">Recibir recetas</a>
+    </div>
+  </section>
+
+  <!-- ===== TARJETAS DE PAÍSES ===== -->
+  <section id="paises">
+    <div class="contenedor">
+      <div class="titulo-seccion">
+        <h2>Nuestros destinos</h2>
+        <p>Cuatro países, cuatro cocinas y una misma pasión por compartir la mesa.</p>
+      </div>
+
+      <div class="paises">
+        <a href="#republica-dominicana" class="tarjeta rd">
+          <div class="portada">🇩🇴</div>
+          <div class="cuerpo">
+            <h3>República Dominicana</h3>
+            <p>La Bandera, el sancocho y el ritmo del merengue.</p>
+          </div>
+        </a>
+        <a href="#ecuador" class="tarjeta ec">
+          <div class="portada">🇪🇨</div>
+          <div class="cuerpo">
+            <h3>Ecuador</h3>
+            <p>Encebollado, ceviche y sabores de costa y sierra.</p>
+          </div>
+        </a>
+        <a href="#puerto-rico" class="tarjeta pr">
+          <div class="portada">🇵🇷</div>
+          <div class="cuerpo">
+            <h3>Puerto Rico</h3>
+            <p>Mofongo, arroz con gandules y la alegría de la bomba.</p>
+          </div>
+        </a>
+        <a href="#mexico" class="tarjeta mx">
+          <div class="portada">🇲🇽</div>
+          <div class="cuerpo">
+            <h3>México</h3>
+            <p>Tacos, mole y la tradición del mariachi.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DETALLE DE CADA PAÍS ===== -->
+  <section style="padding-top: 0;">
+    <div class="contenedor">
+
+      <!-- República Dominicana -->
+      <article class="pais-detalle" id="republica-dominicana">
+        <div class="visual" style="background: linear-gradient(135deg, #002d62, #c8102e);">
+          <span class="bandera">🇩🇴</span>🍛
+        </div>
+        <div>
+          <h3>República Dominicana</h3>
+          <p>Una cocina criolla llena de sazón, donde el plátano, el arroz y las habichuelas son protagonistas en cada hogar.</p>
+          <div class="bloque">
+            <h4>Platos típicos</h4>
+            <div class="chips">
+              <span class="chip">La Bandera</span>
+              <span class="chip">Sancocho</span>
+              <span class="chip">Mangú con los tres golpes</span>
+              <span class="chip">Locrio</span>
+              <span class="chip">Habichuelas con dulce</span>
+            </div>
+          </div>
+          <div class="bloque">
+            <h4>Música</h4>
+            <div class="chips">
+              <span class="chip">🎶 Merengue</span>
+              <span class="chip">🎶 Bachata</span>
+            </div>
+          </div>
+          <div class="bloque">
+            <h4>Tradiciones</h4>
+            <div class="chips">
+              <span class="chip">Carnaval de febrero</span>
+              <span class="chip">Cena de Nochebuena</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Ecuador -->
+      <article class="pais-detalle" id="ecuador">
+        <div class="visual" style="background: linear-gradient(135deg, #f5c400, #034ea2 65%, #ed1c24);">
+          <span class="bandera">🇪🇨</span>🍲
+        </div>
+        <div>
+          <h3>Ecuador</h3>
+          <p>De la costa a los Andes, Ecuador combina mariscos frescos, maíz, papas y recetas que pasan de generación en generación.</p>
+          <div class="bloque">
+            <h4>Platos típicos</h4>
+            <div class="chips">
+              <span class="chip">Encebollado</span>
+              <span class="chip">Ceviche de camarón</span>
+              <span class="chip">Locro de papa</span>
+              <span class="chip">Llapingachos</span>
+              <span class="chip">Fanesca</span>
+            </div>
+          </div>
+          <div class="bloque">
+            <h4>Música</h4>
+            <div class="chips">
+              <span class="chip">🎶 Pasillo</span>
+              <span class="chip">🎶 Sanjuanito</span>
+            </div>
+          </div>
+          <div class="bloque">
+            <h4>Tradiciones</h4>
+            <div class="chips">
+              <span class="chip">Inti Raymi</span>
+              <span class="chip">Fanesca en Semana Santa</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Puerto Rico -->
+      <article class="pais-detalle" id="puerto-rico">
+        <div class="visual" style="background: linear-gradient(135deg, #1d5fbf, #ed0000);">
+          <span class="bandera">🇵🇷</span>🥘
+        </div>
+        <div>
+          <h3>Puerto Rico</h3>
+          <p>Una mezcla de raíces taínas, africanas y españolas que se siente en el sofrito, el pilón y las fiestas de la isla.</p>
+          <div class="bloque">
+            <h4>Platos típicos</h4>
+            <div class="chips">
+              <span class="chip">Mofongo</span>
+              <span class="chip">Arroz con gandules</span>
+              <span class="chip">Pernil</span>
+              <span class="chip">Alcapurrias</span>
+              <span class="chip">Coquito</span>
+            </div>
+          </div>
+          <div class="bloque">
+            <h4>Música</h4>
+            <div class="chips">
+              <span class="chip">🎶 Bomba</span>
+              <span class="chip">🎶 Plena</span>
+              <span class="chip">🎶 Salsa</span>
+            </div>
+          </div>
+          <div class="bloque">
+            <h4>Tradiciones</h4>
+            <div class="chips">
+              <span class="chip">Parrandas navideñas</span>
+              <span class="chip">Fiestas de la Calle San Sebastián</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- México -->
+      <article class="pais-detalle" id="mexico">
+        <div class="visual" style="background: linear-gradient(135deg, #006847, #f2efe6 50%, #ce1126);">
+          <span class="bandera">🇲🇽</span>🌮
+        </div>
+        <div>
+          <h3>México</h3>
+          <p>Su cocina tradicional es Patrimonio Cultural Inmaterial de la Humanidad: maíz, chile y frijol como base de un mundo de sabores.</p>
+          <div class="bloque">
+            <h4>Platos típicos</h4>
+            <div class="chips">
+              <span class="chip">Tacos al pastor</span>
+              <span class="chip">Mole poblano</span>
+              <span class="chip">Pozole</span>
+              <span class="chip">Tamales</span>
+              <span class="chip">Chiles en nogada</span>
+            </div>
+          </div>
+          <div class="bloque">
+            <h4>Música</h4>
+            <div class="chips">
+              <span class="chip">🎶 Mariachi</span>
+              <span class="chip">🎶 Ranchera</span>
+            </div>
+          </div>
+          <div class="bloque">
+            <h4>Tradiciones</h4>
+            <div class="chips">
+              <span class="chip">Día de Muertos</span>
+              <span class="chip">Guelaguetza</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===== EXPERIENCIAS ===== -->
+  <section class="experiencias">
+    <div class="contenedor">
+      <div class="titulo-seccion">
+        <h2>Vive cada destino</h2>
+        <p>Más que recetas: una forma de conocer la cultura de cada país.</p>
+      </div>
+      <div class="grid-exp">
+        <div class="exp">
+          <div class="icono">👩‍🍳</div>
+          <h3>Recetas paso a paso</h3>
+          <p>Prepara en casa los platos más queridos de cada país.</p>
+        </div>
+        <div class="exp">
+          <div class="icono">🎵</div>
+          <h3>Música local</h3>
+          <p>Escucha los ritmos que acompañan cada comida y celebración.</p>
+        </div>
+        <div class="exp">
+          <div class="icono">✈️</div>
+          <h3>Guías de viaje</h3>
+          <p>Los mejores lugares para probar la comida auténtica.</p>
+        </div>
+        <div class="exp">
+          <div class="icono">🎉</div>
+          <h3>Tradiciones</h3>
+          <p>Fiestas, costumbres e historias detrás de cada plato.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SUSCRIPCIÓN ===== -->
+  <section id="suscribete">
+    <div class="contenedor">
+      <div class="suscribete">
+        <h2>Recibe una receta nueva cada semana</h2>
+        <p>Únete a nuestra comunidad y viaja por el mundo desde tu cocina.</p>
+        <form id="formulario">
+          <input type="email" id="correo" placeholder="Tu correo electrónico" required>
+          <button type="submit">Suscribirme</button>
+        </form>
+        <p id="mensaje"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PIE DE PÁGINA ===== -->
+  <footer>
+    <div class="contenedor">
+      <p>© 2026 Sabores del Mundo · República Dominicana · Ecuador · Puerto Rico · México</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mensaje de confirmación al suscribirse (sin enviar datos a ningún servidor)
+    document.getElementById('formulario').addEventListener('submit', function (e) {
+      e.preventDefault();
+      document.getElementById('mensaje').textContent = '¡Gracias por suscribirte! Pronto recibirás tu primera receta. 🍽️';
+      this.reset();
+    });
+  </script>
+
+</body>
+</html>
